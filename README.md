@@ -48,7 +48,32 @@ for convenience.
   * manually written client
   * Unity TestGrpcBehaviour that tries to run the service targeting 127.0.0.1:9991
 
-Now you should immediately see errors like:
+The most important part here is manually written client, so code that normally would be generated:
+```
+return this.invoker.AsyncServerStreamingCall<Example.HelloRequest, Example.HelloReply>(
+     // Your protobufs message and response as T1, T2.  
+     new Method<Example.HelloRequest, Example.HelloReply>(
+         // MethodType: Unary, ClientStreaming, ServerStreaming or DuplexStreaming (Bidirectional stream).
+         MethodType.ServerStreaming,
+         // This is bit manual, but basically get from your .proto service:
+         // <package name>.<service name>    
+         "example.MultiGreeter",
+         // <method name after "rpc" in your service>
+         "sayHello",
+         // Serialization definition for request.
+         new ProtoMarshaller<Example.HelloRequest>(Example.HelloRequest.Parser),
+         // Serialization definition for respone.
+         new ProtoMarshaller<Example.HelloReply>(Example.HelloReply.Parser)
+     ),
+     this.host,
+     new CallOptions(cancellationToken: new GrpcCancellationToken(ctx)),
+     req
+ );
+```
+For unary calls you can switch `this.invoker.AsyncServerStreamingCall` for just `this.BlockingUnaryCall` if you don't
+want to play with async code. (:
+
+After copying this example csharp_client you should immediately see errors like:
 ```
 Assets/csharp-client/Model/Greeter.cs(6,12): error CS0400: The type or namespace name `Google' could not be found in the global namespace (are you missing an assembly reference?)
 ```
