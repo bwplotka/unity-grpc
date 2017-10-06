@@ -70,6 +70,8 @@ return this.invoker.AsyncServerStreamingCall<Example.HelloRequest, Example.Hello
      req
  );
 ```
+You need to manually implement that for each method in your proto service!
+
 For unary calls you can switch `this.invoker.AsyncServerStreamingCall` for just `this.BlockingUnaryCall` if you don't
 want to play with async code. (:
 
