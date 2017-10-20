@@ -11,6 +11,8 @@ The idea of this short tutorial came in response to https://github.com/neuecc/Ma
 
 ## Tutorial
 
+Step by step setup of example client and server to show gRPC support for Unity 4+.
+
 ### Client (Unity with C# .Net 3.5)
 
 * Create new project
@@ -43,7 +45,7 @@ This scripts is using protoc-3.0.0, which is provided in this repo [here](.\bin\
 You can use `protogen_csharp` script to generate your own stuff. However, generated protobufs are already commited into this repo
 for convenience.
 
-* Copy example/csharp-client to Unity Assets. (you can drag & drop it). This contains:
+* Copy `example/csharp-client` to Unity Assets. (you can drag & drop it). This contains:
   * generated proto messages
   * manually written client
   * Unity TestGrpcBehaviour that tries to run the service targeting `127.0.0.1:9991`
@@ -74,9 +76,9 @@ return this.invoker.AsyncServerStreamingCall<Example.HelloRequest, Example.Hello
 You need to manually implement that for each method in your proto service!
 
 For unary calls you can switch `this.invoker.AsyncServerStreamingCall` for just `this.BlockingUnaryCall` if you don't
-want to play with async code. (:
+want to play with async code. (: If you wish to deal with concurrency just use `this.invoker.AsyncUnaryCall`.
 
-After copying this example csharp_client you should immediately see errors like:
+After copying the example `csharp_client` directory you should immediately see errors like:
 ```
 Assets/csharp-client/Model/Greeter.cs(6,12): error CS0400: The type or namespace name `Google' could not be found in the global namespace (are you missing an assembly reference?)
 ```
@@ -85,11 +87,11 @@ This is tricky part, because we need to get protobuf library that will fit with 
 
 I used this great fork https://github.com/emikra/protobuf3-cs.
 Nuget install command from README.md totally did not work for me (visual 2013), so I ended up
-building the dll myself (using visual 2017)
+building the .dll myself (using visual 2017). I provide what I built here in this repo, so:
 
 * Copy provided dll from protobuf-net35/protobuf3.dll into your unity Assets
 
-There is a risk it will not work you (not sure if I built for x86 or x64, so you might want to rebuild 
+There is a risk it will not work you (not sure even if I built for x86 or x64, so you might want to rebuild 
 it from source if needed.
 
 From now you should be able to rebuild the Unity code. 
@@ -132,6 +134,9 @@ RpcException: Status(StatusCode=Unavailable, Detail="Connect Failed")
 UniRx.Stubs.<Throw>m__6B (System.Exception ex) (at Assets/Plugins/UniRx/Scripts/Observer.cs:495)
 UniRx.Observable+<ToAwaitableEnumerator>c__Iterator10`1[System.Boolean].MoveNext () (at Assets/Plugins/UniRx/Scripts/UnityEngineBridge/Observable.Unity.cs:939)
 ```
+
+The client is done, but now all we need to do is to spin up our server to handle gRPC traffic!
+
 ### Server (Go)
 
 Prepate go enviroment (golang installed, GOPATH exported)
@@ -141,7 +146,7 @@ Prepate go enviroment (golang installed, GOPATH exported)
 * Run `bash ./example/protogen_go.sh`
 * Start server using `go run example/go-server/server.go`
 
-Ii will listen on 127.0.0.1:9991
+Ii will listen on `127.0.0.1:9991`
 
 * Now let's start our unity again.
 
