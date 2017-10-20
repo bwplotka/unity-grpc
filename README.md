@@ -41,7 +41,7 @@ The only manual part is to use gRPC lib's classes provided in `lib/gRPC` to call
 * Go to example directory.
 * Run `bash ./example/protogen_csharp.sh` (I am using windows migw32) to generate protobuf messages for our example.
 
-This scripts is using protoc-3.0.0, which is provided in this repo [here](.\bin\protoc-3.0.0-win32). This is standard protoc downloaded from upstream.
+This scripts is using protoc-3.0.0, which is provided in this repo [here](./bin/protoc-3.0.0-win32). This is standard protoc downloaded from upstream.
 You can use `protogen_csharp` script to generate your own stuff. However, generated protobufs are already commited into this repo
 for convenience.
 
