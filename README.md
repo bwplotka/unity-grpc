@@ -34,7 +34,7 @@ The cool part is, that you can use exactly the same proto file with service defi
 just ignore this, so you can generate gRPC + protobuf messages for server (in my example it will be Golang), and
 C# protobuf messages for client. 
 
-The only manual part is to use gRPC lib's classes provided in `lib/gRPC` to call known ServiceName and Method you prepared. This is normally done by gRPC generated code from proto itself, but needed to recreate that manually [here](./examples/csharp-client/GreeterClient.cs). We could write plugin to generate this, but having .Net 4.5 C# support in Unity "soon-ish", not sure if it's worth it.
+The only manual part is to use gRPC lib's classes provided in `lib/gRPC` to call known _ServiceName_ and _Method_ you prepared. This is normally done by gRPC generated code from proto itself, but needed to recreate that manually [here](./examples/csharp-client/GreeterClient.cs). We could write plugin to generate this, but having .Net 4.5 C# support in Unity "soon-ish", not sure if it's worth it.
 
 * Go to example directory.
 * Run `bash ./example/protogen_csharp.sh` (I am using windows migw32) to generate protobuf messages for our example.
@@ -46,10 +46,11 @@ for convenience.
 * Copy example/csharp-client to Unity Assets. (you can drag & drop it). This contains:
   * generated proto messages
   * manually written client
-  * Unity TestGrpcBehaviour that tries to run the service targeting 127.0.0.1:9991
+  * Unity TestGrpcBehaviour that tries to run the service targeting `127.0.0.1:9991`
 
 The most important part here is manually written client, so code that normally would be generated:
-```
+
+```c#
 return this.invoker.AsyncServerStreamingCall<Example.HelloRequest, Example.HelloReply>(
      // Your protobufs message and response as T1, T2.  
      new Method<Example.HelloRequest, Example.HelloReply>(
