@@ -36,7 +36,7 @@ The cool part is, that you can use exactly the same proto file with service defi
 just ignore this, so you can generate gRPC + protobuf messages for server (in my example it will be Golang), and
 C# protobuf messages for client. 
 
-The only manual part is to use gRPC lib's classes provided in `lib/gRPC` to call known _ServiceName_ and _Method_ you prepared. This is normally done by gRPC generated code from proto itself, but needed to recreate that manually [here](./examples/csharp-client/GreeterClient.cs). We could write plugin to generate this, but having .Net 4.5 C# support in Unity "soon-ish", not sure if it's worth it.
+The only manual part is to use gRPC lib's classes provided in `lib/gRPC` to call known _ServiceName_ and _Method_ you prepared. This is normally done by gRPC generated code from proto itself, but needed to recreate that manually [here](./example/csharp-client/GreeterClient.cs). We could write plugin to generate this, but having .Net 4.5 C# support in Unity "soon-ish", not sure if it's worth it.
 
 * Go to example directory.
 * Run `bash ./example/protogen_csharp.sh` (I am using windows migw32) to generate protobuf messages for our example.
